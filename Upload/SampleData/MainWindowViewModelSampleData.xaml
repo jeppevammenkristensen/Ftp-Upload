@@ -1,0 +1,26 @@
+﻿<Upload:MainWindowViewModel xmlns:Upload="clr-namespace:Upload" xmlns:System="clr-namespace:System;assembly=mscorlib" IsValid="True" Location="Hac aliquam" Status="Convallis dignissim elementum vivamus eleifend">
+	<Upload:MainWindowViewModel.Information>
+		<Upload:Status Progress="45" Path="Aliquam cras vestibulum maecenas"/>
+		<Upload:Status Progress="43" Path="Aenean adipiscing"/>
+		<Upload:Status Progress="76" Path="Praesent duis parturient class vestibulum"/>
+		<Upload:Status Progress="50" Path="Nam mauris accumsan curabitur"/>
+		<Upload:Status Progress="75" Path="Sed nullam bibendum"/>
+		<Upload:Status Progress="67" Path="Curae phasellus aptent nunc consequat"/>
+		<Upload:Status Progress="95" Path="Dis vestibulum est adipiscing"/>
+		<Upload:Status Progress="24" Path="Amet donec"/>
+		<Upload:Status Progress="25" Path="Integer quisque parturient dictumst ante"/>
+		<Upload:Status Progress="22" Path="Auctor etiam arcu"/>
+	</Upload:MainWindowViewModel.Information>
+	<Upload:MainWindowViewModel.MissingProperties>
+		<System:String>Diam leo facilisi</System:String>
+		<System:String>Facilisis eget fusce fermentum</System:String>
+		<System:String>Congue vestibulum aliquet fringilla lorem</System:String>
+		<System:String>Morbi vestibulum</System:String>
+		<System:String>Habitasse nulla adipiscing</System:String>
+		<System:String>Blandit hendrerit proin himenaeos</System:String>
+		<System:String>Parturient cursus elit</System:String>
+		<System:String>Enim commodo imperdiet faucibus vestibulum</System:String>
+		<System:String>Conubia erat habitant</System:String>
+		<System:String>Eros augue</System:String>
+	</Upload:MainWindowViewModel.MissingProperties>
+</Upload:MainWindowViewModel>
