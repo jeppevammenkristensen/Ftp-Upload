@@ -12,6 +12,8 @@ namespace Upload.Configuration
         public string Password { get; set; }
 
 
+        public string Name { get; set; }
+
         private static FtpInformation QuickCopy()
         {
             return new FtpInformation()
@@ -19,8 +21,12 @@ namespace Upload.Configuration
                 Password = "",
                 Server =  "",
                 UserName = "",
+                Name = "CustomName",
+                Path = "/my/customlocation",
             };
         }
+
+        public string Path { get; set; }
 
         public List<string> GetPropertiesMissingInitialization()
         {
@@ -28,7 +34,8 @@ namespace Upload.Configuration
             {
                 new Tuple<string, Func<string>>("Server", () => Server),
                 new Tuple<string, Func<string>>("UserName", () => UserName),
-                new Tuple<string, Func<string>>("Password", () => Password)
+                new Tuple<string, Func<string>>("Password", () => Password),
+                new Tuple<string, Func<string>>("Path", () => Path)
             };
 
 

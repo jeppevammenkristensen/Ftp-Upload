@@ -36,7 +36,7 @@ namespace Upload
 
             DataContext = Scope;
 
-            if (Scope.IsValid)
+            if (Scope.IsValid && Scope.NamedConfigurations.Count == 1)
             {
                 await Scope.UploadAsync();
                 Scope.Status = "Færdig...";

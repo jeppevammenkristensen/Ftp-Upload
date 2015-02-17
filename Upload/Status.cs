@@ -31,10 +31,6 @@ namespace Upload
             }
         }
 
-
-
-        
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -15,12 +16,24 @@ namespace Upload
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private FtpInformation _configuration;
-        
+        private List<FtpInformation> _configurations;
+
+        public ObservableCollection<string> NamedConfigurations { get; set; }
+
+        public FtpInformation Configuration { get; set; }
+
+        public string CurrentConfigurationName
+        {
+            get { return Configuration.Name; }
+        }
 
         public MainWindowViewModel()
         {
             Information = new ObservableCollection<Status>();
+            _configurations = Config.Global.Get<List<FtpInformation>>("ftp");
+            NamedConfigurations = new ObservableCollection<string>(_configurations.Select(x => x.Name));
+            
+            Configuration = _configurations[0];
         }
 
         public bool IsValid
@@ -99,7 +112,7 @@ namespace Upload
 
                     TransferOperationResult transferResult = null;
 
-                    transferResult = session.PutFiles(Location, string.Format("/jvk/CustomUpload_{0:yyyyMMddhhmmss}", DateTime.Now), false, transferOptions);
+                    transferResult = session.PutFiles(Location, string.Format("{0}_{1:yyyyMMddhhmmss}",Configuration.Path, DateTime.Now), false, transferOptions);
 
                     // Throw on any error
                     transferResult.Check();
@@ -141,11 +154,11 @@ namespace Upload
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public async Task CheckConfiguration()
+        public async Task CheckConfiguration(int index = 0)
         {
-            _configuration = Config.Global.Get<FtpInformation>("ftp");
-
-            var missingProperties = _configuration.GetPropertiesMissingInitialization();
+            Configuration = _configurations[index];
+            OnPropertyChanged("CurrentConfigurationName");
+            var missingProperties = Configuration.GetPropertiesMissingInitialization();
 
             if (missingProperties.Count > 0)
             {
@@ -181,9 +194,9 @@ namespace Upload
             return new SessionOptions
             {
                 Protocol = Protocol.Ftp,
-                UserName = _configuration.UserName,
-                Password = _configuration.Password,
-                HostName = _configuration.Server
+                UserName = Configuration.UserName,
+                Password = Configuration.Password,
+                HostName = Configuration.Server
             };
         }
 
