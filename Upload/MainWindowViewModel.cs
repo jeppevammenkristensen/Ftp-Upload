@@ -25,6 +25,7 @@ namespace Upload
         private ObservableCollection<string> _missingProperties;
         private int _currentConfigurationIndex;
         private double _overallProgress;
+        private int _cps;
 
         public FtpInformation Configuration { get; set; }
 
@@ -185,10 +186,22 @@ namespace Upload
                     FileStatusInformations.Add(info);
                 }
 
-                info.Progress = (int) (e.FileProgress*100);
+                info.Progress = (int) (e.FileProgress * 100);
             });
 
-            OverallProgress = e.OverallProgress;
+            CPS = e.CPS;
+            OverallProgress = e.OverallProgress * 100;
+        }
+
+        public int CPS
+        {
+            get { return _cps; }
+            set
+            {
+                if (value == _cps) return;
+                _cps = value;
+                OnPropertyChanged();
+            }
         }
 
         public double OverallProgress
