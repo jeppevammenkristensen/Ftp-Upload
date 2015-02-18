@@ -11,6 +11,7 @@ using System.Windows;
 using ConfigR;
 using Upload.Annotations;
 using Upload.Configuration;
+using Upload.Infrastructure;
 using WinSCP;
 
 namespace Upload
@@ -222,7 +223,7 @@ namespace Upload
             {
                 Protocol = Protocol.Ftp,
                 UserName = Configuration.UserName,
-                Password = Configuration.Password,
+                Password = Configuration.Password.Decrypt(),
                 HostName = Configuration.Server
             };
         }
