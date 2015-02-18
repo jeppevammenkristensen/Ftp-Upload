@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
 using ConfigR;
 using Upload.Annotations;
 using Upload.Configuration;
@@ -17,22 +18,20 @@ namespace Upload
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private List<FtpInformation> _configurations;
-
-        public ObservableCollection<string> NamedConfigurations { get; set; }
+        private string _location;
+        private string _status;
+        private ObservableCollection<Status> _information;
+        private bool _isValid;
+        private ObservableCollection<string> _missingProperties;
 
         public FtpInformation Configuration { get; set; }
-
-        public string CurrentConfigurationName
-        {
-            get { return Configuration.Name; }
-        }
 
         public MainWindowViewModel()
         {
             Information = new ObservableCollection<Status>();
             _configurations = Config.Global.Get<List<FtpInformation>>("ftp");
             NamedConfigurations = new ObservableCollection<string>(_configurations.Select(x => x.Name));
-            
+
             Configuration = _configurations[0];
         }
 
@@ -47,6 +46,13 @@ namespace Upload
                 OnPropertyChanged("ShowInvalid");
             }
         }
+
+        public string CurrentConfigurationName
+        {
+            get { return Configuration.Name; }
+        }
+
+        public ObservableCollection<string> NamedConfigurations { get; set; }
 
         public bool ShowInvalid
         {
@@ -63,13 +69,6 @@ namespace Upload
                 OnPropertyChanged();
             }
         }
-
-
-        private string _location;
-        private string _status;
-        private ObservableCollection<Status> _information;
-        private bool _isValid;
-        private ObservableCollection<string> _missingProperties;
 
         public string Status
         {
@@ -112,7 +111,9 @@ namespace Upload
 
                     TransferOperationResult transferResult = null;
 
-                    transferResult = session.PutFiles(Location, string.Format("{0}_{1:yyyyMMddhhmmss}",Configuration.Path, DateTime.Now), false, transferOptions);
+                    transferResult = session.PutFiles(Location,
+                        string.Format("{0}_{1:yyyyMMddhhmmss}", Configuration.Path, DateTime.Now), false,
+                        transferOptions);
 
                     // Throw on any error
                     transferResult.Check();
@@ -122,36 +123,6 @@ namespace Upload
                     //return transferResult.Transfers;
                 }
             });
-        }
-
-        private void FileTransferProgress(object sender, FileTransferProgressEventArgs e)
-        {
-            var attr = File.GetAttributes(e.FileName);
-
-            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
-                return;
-
-            App.Current.Dispatcher.Invoke(() =>
-            {
-                var info = Information.FirstOrDefault(x => x.Path == e.FileName);
-                if (info == null)
-                {
-                    info = new Status() { Path = e.FileName };
-                    Information.Add(info);
-                }
-
-                info.Progress = (int)(e.FileProgress * 100);
-            });
-        }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public async Task CheckConfiguration(int index = 0)
@@ -188,6 +159,26 @@ namespace Upload
             Process.Start("explorer.exe", GlobalParameters.ConfigurationFolder);
         }
 
+        private void FileTransferProgress(object sender, FileTransferProgressEventArgs e)
+        {
+            var attr = File.GetAttributes(e.FileName);
+
+            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                return;
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var info = Information.FirstOrDefault(x => x.Path == e.FileName);
+                if (info == null)
+                {
+                    info = new Status() {Path = e.FileName};
+                    Information.Add(info);
+                }
+
+                info.Progress = (int) (e.FileProgress*100);
+            });
+        }
+
         private SessionOptions GetSessionOptions()
         {
             // Setup session options
@@ -209,6 +200,15 @@ namespace Upload
                     session.Open(GetSessionOptions());
                 }
             });
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
