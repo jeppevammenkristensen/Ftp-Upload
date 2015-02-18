@@ -1,26 +1,29 @@
-﻿<Upload:MainWindowViewModel xmlns:Upload="clr-namespace:Upload" xmlns:System="clr-namespace:System;assembly=mscorlib" IsValid="True" Location="Hac aliquam" Status="Convallis dignissim elementum vivamus eleifend">
-	<Upload:MainWindowViewModel.Information>
-		<Upload:Status Progress="45" Path="Aliquam cras vestibulum maecenas"/>
-		<Upload:Status Progress="43" Path="Aenean adipiscing"/>
-		<Upload:Status Progress="76" Path="Praesent duis parturient class vestibulum"/>
-		<Upload:Status Progress="50" Path="Nam mauris accumsan curabitur"/>
-		<Upload:Status Progress="75" Path="Sed nullam bibendum"/>
-		<Upload:Status Progress="67" Path="Curae phasellus aptent nunc consequat"/>
-		<Upload:Status Progress="95" Path="Dis vestibulum est adipiscing"/>
-		<Upload:Status Progress="24" Path="Amet donec"/>
-		<Upload:Status Progress="25" Path="Integer quisque parturient dictumst ante"/>
-		<Upload:Status Progress="22" Path="Auctor etiam arcu"/>
-	</Upload:MainWindowViewModel.Information>
-	<Upload:MainWindowViewModel.MissingProperties>
-		<System:String>Diam leo facilisi</System:String>
-		<System:String>Facilisis eget fusce fermentum</System:String>
-		<System:String>Congue vestibulum aliquet fringilla lorem</System:String>
-		<System:String>Morbi vestibulum</System:String>
-		<System:String>Habitasse nulla adipiscing</System:String>
-		<System:String>Blandit hendrerit proin himenaeos</System:String>
-		<System:String>Parturient cursus elit</System:String>
-		<System:String>Enim commodo imperdiet faucibus vestibulum</System:String>
-		<System:String>Conubia erat habitant</System:String>
-		<System:String>Eros augue</System:String>
-	</Upload:MainWindowViewModel.MissingProperties>
+﻿<Upload:MainWindowViewModel xmlns:Upload="clr-namespace:Upload" xmlns:Configuration="clr-namespace:Upload.Configuration" xmlns:System="clr-namespace:System;assembly=mscorlib" CurrentConfigurationIndex="31" CurrentConfigurationName="Cras curae" IsValid="True" Location="Porttitor tincidunt sed" MoreThanOneConfiguration="True" OverallProgress="70.5" ShowInvalid="False" Status="Non penatibus per">
+	<Upload:MainWindowViewModel.Configuration>
+		<Configuration:FtpInformation Name="Sed class" Password="Curabitur phasellus" Path="Consequat praesent convallis dignissim" Server="Vestibulum nam" UserName="Maecenas aliquam"/>
+	</Upload:MainWindowViewModel.Configuration>
+	<Upload:MainWindowViewModel.FileStatusInformations>
+		<Upload:Status Progress="30" Path="Morbi leo"/>
+		<Upload:Status Progress="22" Path="Dictumst mus nulla himenaeos nec"/>
+		<Upload:Status Progress="15" Path="Ante congue"/>
+		<Upload:Status Progress="67" Path="Eleifend cursus imperdiet"/>
+		<Upload:Status Progress="18" Path="Dictum arcu"/>
+		<Upload:Status Progress="89" Path="Aliquet diam proin adipiscing augue"/>
+		<Upload:Status Progress="24" Path="Facilisi dolor faucibus malesuada"/>
+		<Upload:Status Progress="49" Path="Eget blandit"/>
+		<Upload:Status Progress="66" Path="Fames felis ipsum"/>
+		<Upload:Status Progress="69" Path="Lectus commodo"/>
+	</Upload:MainWindowViewModel.FileStatusInformations>
+	<Upload:MainWindowViewModel.NamedConfigurations>
+		<System:String>Elementum adipiscing facilisis donec integer</System:String>
+		<System:String>Parturient aenean</System:String>
+		<System:String>Fermentum fringilla etiam</System:String>
+		<System:String>Vestibulum fusce vestibulum accumsan</System:String>
+		<System:String>Duis nunc mauris nullam</System:String>
+		<System:String>Adipiscing habitasse quisque</System:String>
+		<System:String>Vivamus amet</System:String>
+		<System:String>Parturient dis</System:String>
+		<System:String>Est aliquam hac aptent lorem</System:String>
+		<System:String>Bibendum hendrerit auctor vestibulum vestibulum</System:String>
+	</Upload:MainWindowViewModel.NamedConfigurations>
 </Upload:MainWindowViewModel>

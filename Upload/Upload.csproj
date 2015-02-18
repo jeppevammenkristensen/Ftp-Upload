@@ -89,6 +89,8 @@
     </ApplicationDefinition>
     <Compile Include="Configuration\FtpInformation.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Messages\ConfigurationChanged.cs" />
+    <Compile Include="Messages\MessageBus.cs" />
     <Compile Include="Status.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

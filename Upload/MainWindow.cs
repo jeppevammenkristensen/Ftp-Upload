@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Upload.Messages;
 
 namespace Upload
 {
@@ -19,6 +21,8 @@ namespace Upload
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly MessageBus _bus = new MessageBus();
+
         public MainWindowViewModel Scope { get; set; }
 
         public MainWindow()
@@ -29,18 +33,27 @@ namespace Upload
         protected async override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
+            
             Scope = new MainWindowViewModel();
-
             Scope.Location = GlobalParameters.Path;
-            await Scope.CheckConfiguration();
+
+            await Scope.UpdateConfigurationsAsync();
+            await Scope.CheckConfigurationAsync();
 
             DataContext = Scope;
 
             if (Scope.IsValid && Scope.NamedConfigurations.Count == 1)
             {
                 await Scope.UploadAsync();
-                Scope.Status = "Færdig...";
+               
             }
         }
+
+        private async void Upload(object sender, RoutedEventArgs e)
+        {
+            await Scope.UploadAsync();
+        }
+
+        
     }
 }

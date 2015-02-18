@@ -20,19 +20,17 @@ namespace Upload
         private List<FtpInformation> _configurations;
         private string _location;
         private string _status;
-        private ObservableCollection<Status> _information;
+        private ObservableCollection<Status> _fileStatusInformations;
         private bool _isValid;
         private ObservableCollection<string> _missingProperties;
+        private int _currentConfigurationIndex;
+        private double _overallProgress;
 
         public FtpInformation Configuration { get; set; }
 
         public MainWindowViewModel()
         {
-            Information = new ObservableCollection<Status>();
-            _configurations = Config.Global.Get<List<FtpInformation>>("ftp");
-            NamedConfigurations = new ObservableCollection<string>(_configurations.Select(x => x.Name));
-
-            Configuration = _configurations[0];
+            FileStatusInformations = new ObservableCollection<Status>();
         }
 
         public bool IsValid
@@ -49,7 +47,7 @@ namespace Upload
 
         public string CurrentConfigurationName
         {
-            get { return Configuration.Name; }
+            get { return Configuration != null ? Configuration.Name : null; }
         }
 
         public ObservableCollection<string> NamedConfigurations { get; set; }
@@ -59,13 +57,26 @@ namespace Upload
             get { return !IsValid; }
         }
 
-        public ObservableCollection<Status> Information
+        public int CurrentConfigurationIndex
         {
-            get { return _information; }
+            get { return _currentConfigurationIndex; }
             set
             {
-                if (Equals(value, _information)) return;
-                _information = value;
+                if (value == _currentConfigurationIndex) return;
+                _currentConfigurationIndex = value;
+                OnPropertyChanged();
+                CheckConfigurationAsync();
+
+            }
+        }
+
+        public ObservableCollection<Status> FileStatusInformations
+        {
+            get { return _fileStatusInformations; }
+            set
+            {
+                if (Equals(value, _fileStatusInformations)) return;
+                _fileStatusInformations = value;
                 OnPropertyChanged();
             }
         }
@@ -92,9 +103,16 @@ namespace Upload
             }
         }
 
+        public bool MoreThanOneConfiguration
+        {
+            get { return _configurations.Count > 1; }
+        }
+
+
         public async Task UploadAsync()
         {
             Status = "Uploader";
+            FileStatusInformations.Clear();
 
             await Task.Run(() =>
             {
@@ -123,17 +141,20 @@ namespace Upload
                     //return transferResult.Transfers;
                 }
             });
+
+            Status = "Færdig med upload";
         }
 
-        public async Task CheckConfiguration(int index = 0)
+
+        public async Task CheckConfigurationAsync()
         {
-            Configuration = _configurations[index];
+            Configuration = _configurations[CurrentConfigurationIndex];
+            OnPropertyChanged("MoreThanOneConfiguration");
             OnPropertyChanged("CurrentConfigurationName");
             var missingProperties = Configuration.GetPropertiesMissingInitialization();
 
             if (missingProperties.Count > 0)
             {
-                MissingProperties = new ObservableCollection<string>();
                 IsValid = false;
                 Status = string.Format("Der mangler følgende properties. {0}", string.Join(",", missingProperties));
                 return;
@@ -141,17 +162,6 @@ namespace Upload
 
             await CheckConnectionAsync();
             IsValid = true;
-        }
-
-        public ObservableCollection<string> MissingProperties
-        {
-            get { return _missingProperties; }
-            set
-            {
-                if (Equals(value, _missingProperties)) return;
-                _missingProperties = value;
-                OnPropertyChanged();
-            }
         }
 
         public void Open()
@@ -168,15 +178,28 @@ namespace Upload
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                var info = Information.FirstOrDefault(x => x.Path == e.FileName);
+                var info = FileStatusInformations.FirstOrDefault(x => x.Path == e.FileName);
                 if (info == null)
                 {
                     info = new Status() {Path = e.FileName};
-                    Information.Add(info);
+                    FileStatusInformations.Add(info);
                 }
 
                 info.Progress = (int) (e.FileProgress*100);
             });
+
+            OverallProgress = e.OverallProgress;
+        }
+
+        public double OverallProgress
+        {
+            get { return _overallProgress; }
+            set
+            {
+                if (value.Equals(_overallProgress)) return;
+                _overallProgress = value;
+                OnPropertyChanged();
+            }
         }
 
         private SessionOptions GetSessionOptions()
@@ -189,6 +212,15 @@ namespace Upload
                 Password = Configuration.Password,
                 HostName = Configuration.Server
             };
+        }
+
+        public async Task UpdateConfigurationsAsync()
+        {
+            await Task.Run(() => {_configurations = Config.Global.Get<List<FtpInformation>>("ftp");
+            });
+            NamedConfigurations = new ObservableCollection<string>(_configurations.Select(x => x.Name));
+            CurrentConfigurationIndex = 0;
+           
         }
 
         private async Task CheckConnectionAsync()
