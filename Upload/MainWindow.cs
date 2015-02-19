@@ -46,7 +46,6 @@ namespace Upload
             if (Scope.IsValid && Scope.NamedConfigurations.Count == 1)
             {
                 await Scope.UploadAsync();
-               
             }
         }
 
@@ -55,6 +54,10 @@ namespace Upload
             await Scope.UploadAsync();
         }
 
-        
+        private void Open_Clicked(object sender, RoutedEventArgs e)
+        {
+            CreateEditFtpConfigurationView view = new CreateEditFtpConfigurationView();
+            view.Show();
+        }
     }
 }

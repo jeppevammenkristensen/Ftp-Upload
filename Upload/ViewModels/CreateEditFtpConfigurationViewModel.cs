@@ -1,7 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using Upload.Annotations;
+using Upload.Infrastructure.Encryption;
+using Upload.Infrastructure.Extensions;
 using Upload.Infrastructure.Ftp;
 
 namespace Upload.ViewModels
@@ -37,17 +44,6 @@ namespace Upload.ViewModels
             }
         }
 
-        public string Password
-        {
-            get { return _password; }
-            set
-            {
-                if (value == _password) return;
-                _password = value;
-                OnPropertyChanged();
-            }
-        }
-
         public string TestResult
         {
             get { return _testResult; }
@@ -59,9 +55,12 @@ namespace Upload.ViewModels
             }
         }
 
-        public async void TestConnection()
+        public Func<string> GetText;
+
+        public async Task TestConnection()
         {
-            var result = await _ftpService.Value.CheckConnectionAsync(UserName, Password, Server);
+            _password = GetText();
+            var result = await _ftpService.Value.CheckConnectionAsync(UserName, _password, Server);
             if (result == FtpService.FtpConnectionResult.Valid)
                 TestResult = "Valid forbindelse";
             else
@@ -69,6 +68,29 @@ namespace Upload.ViewModels
                 TestResult = "Kunne ikke forbinde";
             }
 
+        }
+
+        public void TaskCopyConfiguration()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "Upload.Infrastructure.Writer.FtpConfiguration.txt";
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    var format = reader.ReadToEnd();
+
+                    string result = string.Format(format,_password.Encrypt()
+                        , Server.Stringify()
+                        , UserName.Stringify()
+                        );
+                    Clipboard.SetText(result);
+                    Process.Start("explorer.exe", GlobalParameters.ConfigurationFolder);
+                }
+            }
+
+            
         }
 
         #region

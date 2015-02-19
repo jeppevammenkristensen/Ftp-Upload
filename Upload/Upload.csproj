@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="Infrastructure\Encryption\Crypt.cs" />
     <Compile Include="Infrastructure\Encryption\EncryptionExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
     <Compile Include="Infrastructure\Ftp\FtpService.cs" />
     <Compile Include="ViewModels\CreateEditFtpConfigurationViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -153,6 +154,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Infrastructure\Writer\FtpConfiguration.txt" />
     <Content Include="WinSCP.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

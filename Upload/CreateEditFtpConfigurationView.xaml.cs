@@ -33,9 +33,14 @@ namespace Upload
             base.OnInitialized(e);
 
             Scope = new CreateEditFtpConfigurationViewModel();
+            Scope.GetText = () => PasswordTextBox.Password;
             DataContext = Scope;
         }
 
-        
+
+        private async void Test_Click(object sender, RoutedEventArgs e)
+        {
+            await Scope.TestConnection();
+        }
     }
 }
