@@ -92,6 +92,9 @@
     </ApplicationDefinition>
     <Compile Include="Configuration\Encryption.cs" />
     <Compile Include="Configuration\FtpInformation.cs" />
+    <Compile Include="CreateEditFtpConfigurationView.xaml.cs">
+      <DependentUpon>CreateEditFtpConfigurationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Infrastructure\Encryption\Crypt.cs" />
     <Compile Include="Infrastructure\Encryption\EncryptionExtensions.cs" />
     <Compile Include="Infrastructure\Ftp\FtpService.cs" />
@@ -100,6 +103,10 @@
     <Compile Include="Messages\ConfigurationChanged.cs" />
     <Compile Include="Messages\MessageBus.cs" />
     <Compile Include="Status.cs" />
+    <Page Include="CreateEditFtpConfigurationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -151,6 +158,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <DesignData Include="SampleData\CreateEditFtpConfigurationViewModelSampleData.xaml" />
     <DesignData Include="SampleData\MainWindowViewModelSampleData.xaml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

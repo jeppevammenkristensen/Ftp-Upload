@@ -1,0 +1,28 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" mc:Ignorable="d" x:Class="Upload.CreateEditFtpConfigurationView"
+        Title="CreateEditFtpConfigurationView" Height="300" Width="300">
+	<Grid d:DataContext="{d:DesignData /SampleData/CreateEditFtpConfigurationViewModelSampleData.xaml}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="235*"/>
+			<RowDefinition Height="34*"/>
+		</Grid.RowDefinitions>
+		<StackPanel Margin="5" Orientation="Vertical" Grid.RowSpan="2">
+			<TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Text="Server" Margin="{DynamicResource Margin}"/>
+			<TextBox Height="23" TextWrapping="Wrap" Text="{Binding Server}" ToolTip="{DynamicResource Margin}"/>
+			<TextBlock x:Name="___TextBlock__Username" TextWrapping="Wrap" VerticalAlignment="Top" Text="UserName" Margin="{DynamicResource Margin}"/>
+			<TextBox Height="23" TextWrapping="Wrap" Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="{DynamicResource Margin}"/>
+			<TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Margin="{DynamicResource Margin}" Text="Password"/>
+			<PasswordBox/>
+			<TextBlock TextWrapping="Wrap" Margin="{DynamicResource Margin}" Height="50" Text="{Binding TestResult}"/>
+		</StackPanel>
+		<Button Content="Test" Margin="{DynamicResource Margin}" Grid.Row="1">
+			<i:Interaction.Triggers>
+				<i:EventTrigger EventName="Click">
+					<ei:CallMethodAction MethodName="TestConnection" TargetObject="{Binding}"/>
+				</i:EventTrigger>
+			</i:Interaction.Triggers>
+		</Button>
+	</Grid>
+</Window>
