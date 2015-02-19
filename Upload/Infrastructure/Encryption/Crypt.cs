@@ -3,7 +3,7 @@ using ConfigR;
 using Effortless.Net.Encryption;
 using Upload.Configuration;
 
-namespace Upload.Infrastructure
+namespace Upload.Infrastructure.Encryption
 {
     public class PasswordCrypt
     {

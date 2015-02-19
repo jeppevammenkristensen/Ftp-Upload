@@ -92,8 +92,10 @@
     </ApplicationDefinition>
     <Compile Include="Configuration\Encryption.cs" />
     <Compile Include="Configuration\FtpInformation.cs" />
-    <Compile Include="Infrastructure\Crypt.cs" />
-    <Compile Include="Infrastructure\EncryptionExtensions.cs" />
+    <Compile Include="Infrastructure\Encryption\Crypt.cs" />
+    <Compile Include="Infrastructure\Encryption\EncryptionExtensions.cs" />
+    <Compile Include="Infrastructure\Ftp\FtpService.cs" />
+    <Compile Include="ViewModels\CreateEditFtpConfigurationViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Messages\ConfigurationChanged.cs" />
     <Compile Include="Messages\MessageBus.cs" />

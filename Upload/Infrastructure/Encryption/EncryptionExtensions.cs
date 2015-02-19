@@ -1,4 +1,4 @@
-﻿namespace Upload.Infrastructure
+﻿namespace Upload.Infrastructure.Encryption
 {
     public static class EncryptionExtensions
     {

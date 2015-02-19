@@ -12,12 +12,16 @@ using ConfigR;
 using Upload.Annotations;
 using Upload.Configuration;
 using Upload.Infrastructure;
+using Upload.Infrastructure.Encryption;
+using Upload.Infrastructure.Ftp;
 using WinSCP;
 
 namespace Upload.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
+        private Lazy<FtpService>  _ftpService = new Lazy<FtpService>();
+
         private List<FtpInformation> _configurations;
         private string _location;
         private string _status;
@@ -239,13 +243,16 @@ namespace Upload.ViewModels
 
         private async Task CheckConnectionAsync()
         {
-            await Task.Run(() =>
+            var result = await
+                    _ftpService.Value.CheckConnectionAsync(Configuration.UserName, Configuration.Password.Decrypt(),
+                        Configuration.Server);
+
+            if (result == FtpService.FtpConnectionResult.Valid)
+                Status = "Forbindelse er ok";
+            else
             {
-                using (var session = new Session())
-                {
-                    session.Open(GetSessionOptions());
-                }
-            });
+                Status = "Forbindelse duer ikke";
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
