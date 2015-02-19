@@ -14,7 +14,7 @@ using Upload.Configuration;
 using Upload.Infrastructure;
 using WinSCP;
 
-namespace Upload
+namespace Upload.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {

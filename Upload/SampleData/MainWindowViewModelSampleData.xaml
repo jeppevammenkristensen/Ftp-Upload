@@ -1,8 +1,10 @@
-﻿<Upload:MainWindowViewModel xmlns:Upload="clr-namespace:Upload" xmlns:Configuration="clr-namespace:Upload.Configuration" xmlns:System="clr-namespace:System;assembly=mscorlib" CurrentConfigurationIndex="31" CurrentConfigurationName="Cras curae" IsValid="True" Location="Porttitor tincidunt sed" MoreThanOneConfiguration="True" OverallProgress="70.5" ShowInvalid="False" Status="Non penatibus per">
-	<Upload:MainWindowViewModel.Configuration>
+﻿<viewModels:MainWindowViewModel xmlns:Upload="clr-namespace:Upload" xmlns:Configuration="clr-namespace:Upload.Configuration" xmlns:System="clr-namespace:System;assembly=mscorlib"
+                            xmlns:viewModels="clr-namespace:Upload.ViewModels"
+                            CurrentConfigurationIndex="31" CurrentConfigurationName="Cras curae" IsValid="True" Location="Porttitor tincidunt sed" MoreThanOneConfiguration="True" OverallProgress="70.5" ShowInvalid="False" Status="Non penatibus per">
+	<viewModels:MainWindowViewModel.Configuration>
 		<Configuration:FtpInformation Name="Sed class" Password="Curabitur phasellus" Path="Consequat praesent convallis dignissim" Server="Vestibulum nam" UserName="Maecenas aliquam"/>
-	</Upload:MainWindowViewModel.Configuration>
-	<Upload:MainWindowViewModel.FileStatusInformations>
+	</viewModels:MainWindowViewModel.Configuration>
+	<viewModels:MainWindowViewModel.FileStatusInformations>
 		<Upload:Status Progress="30" Path="Morbi leo"/>
 		<Upload:Status Progress="22" Path="Dictumst mus nulla himenaeos nec"/>
 		<Upload:Status Progress="15" Path="Ante congue"/>
@@ -13,8 +15,8 @@
 		<Upload:Status Progress="49" Path="Eget blandit"/>
 		<Upload:Status Progress="66" Path="Fames felis ipsum"/>
 		<Upload:Status Progress="69" Path="Lectus commodo"/>
-	</Upload:MainWindowViewModel.FileStatusInformations>
-	<Upload:MainWindowViewModel.NamedConfigurations>
+	</viewModels:MainWindowViewModel.FileStatusInformations>
+	<viewModels:MainWindowViewModel.NamedConfigurations>
 		<System:String>Elementum adipiscing facilisis donec integer</System:String>
 		<System:String>Parturient aenean</System:String>
 		<System:String>Fermentum fringilla etiam</System:String>
@@ -25,5 +27,5 @@
 		<System:String>Parturient dis</System:String>
 		<System:String>Est aliquam hac aptent lorem</System:String>
 		<System:String>Bibendum hendrerit auctor vestibulum vestibulum</System:String>
-	</Upload:MainWindowViewModel.NamedConfigurations>
-</Upload:MainWindowViewModel>
+	</viewModels:MainWindowViewModel.NamedConfigurations>
+</viewModels:MainWindowViewModel>

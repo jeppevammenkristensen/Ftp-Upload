@@ -94,7 +94,7 @@
     <Compile Include="Configuration\FtpInformation.cs" />
     <Compile Include="Infrastructure\Crypt.cs" />
     <Compile Include="Infrastructure\EncryptionExtensions.cs" />
-    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Messages\ConfigurationChanged.cs" />
     <Compile Include="Messages\MessageBus.cs" />
     <Compile Include="Status.cs" />
