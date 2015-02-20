@@ -67,31 +67,29 @@ namespace Upload.ViewModels
             {
                 TestResult = "Kunne ikke forbinde";
             }
-
         }
 
-        public void TaskCopyConfiguration()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "Upload.Infrastructure.Writer.FtpConfiguration.txt";
+        // This is temporarily commented out. It was very specific towards configr configuration
+        //public void TaskCopyConfiguration()
+        //{
+        //    var assembly = Assembly.GetExecutingAssembly();
+        //    var resourceName = "Upload.Infrastructure.Writer.FtpConfiguration.txt";
 
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            {
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    var format = reader.ReadToEnd();
+        //    using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+        //    {
+        //        using (StreamReader reader = new StreamReader(stream))
+        //        {
+        //            var format = reader.ReadToEnd();
 
-                    string result = string.Format(format,_password.Encrypt()
-                        , Server.Stringify()
-                        , UserName.Stringify()
-                        );
-                    Clipboard.SetText(result);
-                    Process.Start("explorer.exe", GlobalParameters.ConfigurationFolder);
-                }
-            }
-
-            
-        }
+        //            string result = string.Format(format,_password.Encrypt()
+        //                , Server.Stringify()
+        //                , UserName.Stringify()
+        //                );
+        //            Clipboard.SetText(result);
+        //            Process.Start("explorer.exe", GlobalParameters.ConfigurationFolder);
+        //        }
+        //    }
+        //}
 
         #region
 

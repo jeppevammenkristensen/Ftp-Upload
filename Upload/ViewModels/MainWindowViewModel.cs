@@ -170,10 +170,11 @@ namespace Upload.ViewModels
             IsValid = true;
         }
 
-        public void Open()
-        {
-            Process.Start("explorer.exe", GlobalParameters.ConfigurationFolder);
-        }
+        // Temporarily checked out because of it's direct relation to ConfigR
+        //public void Open()
+        //{
+        //    Process.Start("explorer.exe", GlobalParameters.ConfigurationFolder);
+        //}
 
         private void FileTransferProgress(object sender, FileTransferProgressEventArgs e)
         {

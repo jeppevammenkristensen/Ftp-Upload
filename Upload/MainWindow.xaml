@@ -62,13 +62,14 @@
 		</Grid>
 		<Button Content="Upload" Grid.Column="2" Margin="10" Visibility="{Binding MoreThanOneConfiguration, Converter={StaticResource BooleanToVisibilityConverter}}" IsEnabled="{Binding IsValid, Converter={StaticResource BooleanToVisibilityConverter}}" Click="Upload"/>
 
+        <!-- Checked out because of relatively direct binding to ConfigR
         <Button x:Name="button" Content="Open" Grid.Column="2" Margin="10" Grid.Row="2" VerticalAlignment="Top" Click="Open_Clicked"  >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <ei:CallMethodAction MethodName="Open" TargetObject="{Binding}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-        </Button>
+        </Button>-->
 
     </Grid>
 </Window>
