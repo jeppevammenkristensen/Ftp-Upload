@@ -2,16 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
-using ConfigR;
 using Upload.Annotations;
 using Upload.Configuration;
-using Upload.Infrastructure;
 using Upload.Infrastructure.Encryption;
 using Upload.Infrastructure.Ftp;
 using WinSCP;
@@ -136,7 +133,7 @@ namespace Upload.ViewModels
                     TransferOperationResult transferResult = null;
 
                     transferResult = session.PutFiles(Location,
-                        string.Format("{0}_{1:yyyyMMddhhmmss}", Configuration.Path, DateTime.Now), false,
+                        string.Format("{0}_{1:yyyyMMddHHmmss}", Configuration.Path, DateTime.Now), false,
                         transferOptions);
 
                     // Throw on any error
@@ -235,7 +232,7 @@ namespace Upload.ViewModels
 
         public async Task UpdateConfigurationsAsync()
         {
-            await Task.Run(() => {_configurations = Config.Global.Get<List<FtpInformation>>("ftp");
+            await Task.Run(() => {_configurations = UploadConfig.Global.Get<List<FtpInformation>>(ConfigurationKeys.FTP);
             });
             NamedConfigurations = new ObservableCollection<string>(_configurations.Select(x => x.Name));
             CurrentConfigurationIndex = 0;

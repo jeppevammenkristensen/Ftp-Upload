@@ -2,9 +2,9 @@
 using System.IO;
 using ConfigR;
 
-namespace Upload.Configuration
+namespace Upload.Configuration.ConfigR
 {
-    public class ConfigRConfigurationManager : IConfigurationManager
+    public class ConfigRConfigurationManager : IInitializableConfigurationManager
     {
         public static string ConfigurationFolder { get; set; }
 
@@ -26,10 +26,20 @@ namespace Upload.Configuration
 
             Config.Global.LoadScriptFile(filePath, AppDomain.CurrentDomain.GetAssemblies());
         }
+
+        public T Get<T>(string key)
+        {
+            return Config.Global.Get<T>(key);
+        }
+    }
+
+    public interface IInitializableConfigurationManager : IConfigurationManager
+    {
+        void Initalize(string[] args);
     }
 
     public interface IConfigurationManager
     {
-        void Initalize(string[] args);
+        T Get<T>(string key);
     }
 }

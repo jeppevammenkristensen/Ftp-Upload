@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using ConfigR;
+using Upload.Configuration;
+using Upload.Configuration.ConfigR;
 
 namespace Upload
 {
@@ -17,7 +13,8 @@ namespace Upload
     {
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-            GlobalParameters.Path = e.Args.FirstOrDefault() ?? Directory.GetCurrentDirectory();
+            GlobalParameters.Path = e.Args.FirstOrDefault() ?? @"c:\temp\testfolder";
+            UploadConfig.SetConfigurationManager(new ConfigRConfigurationManager(), e.Args);
         }
     }
 

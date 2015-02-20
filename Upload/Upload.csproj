@@ -90,9 +90,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Configuration\ConfigRConfigurationManager.cs" />
+    <Compile Include="Configuration\ConfigR\ConfigRConfigurationManager.cs" />
+    <Compile Include="Configuration\ConfigurationKeys.cs" />
     <Compile Include="Configuration\Encryption.cs" />
     <Compile Include="Configuration\FtpInformation.cs" />
+    <Compile Include="Configuration\UploadConfig.cs" />
     <Compile Include="CreateEditFtpConfigurationView.xaml.cs">
       <DependentUpon>CreateEditFtpConfigurationView.xaml</DependentUpon>
     </Compile>

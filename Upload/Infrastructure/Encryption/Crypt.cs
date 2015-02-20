@@ -7,7 +7,7 @@ namespace Upload.Infrastructure.Encryption
 {
     public class PasswordCrypt
     {
-        private static Lazy<EncryptionConfiguration> _configuration = new Lazy<EncryptionConfiguration>(() => Config.Global.Get<EncryptionConfiguration>());
+        private static readonly Lazy<EncryptionConfiguration> _configuration = new Lazy<EncryptionConfiguration>(() => UploadConfig.Global.Get<EncryptionConfiguration>(ConfigurationKeys.Encryption));
 
         public string Decrypt(string cipherText)
         {

@@ -1,0 +1,15 @@
+﻿namespace Upload.Configuration
+{
+    public class ConfigurationKeys
+    {
+        /// <summary>
+        /// encryption
+        /// </summary>
+        public const string Encryption = "encryption";
+
+        /// <summary>
+        /// ftp
+        /// </summary>
+        public const string FTP = "ftp";
+    }
+}
