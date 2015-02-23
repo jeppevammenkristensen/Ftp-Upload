@@ -1,14 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Upload.Annotations;
+using Upload.Commands;
+using Upload.Configuration;
 using Upload.Infrastructure.Encryption;
-using Upload.Infrastructure.Extensions;
 using Upload.Infrastructure.Ftp;
 
 namespace Upload.ViewModels
@@ -16,6 +13,7 @@ namespace Upload.ViewModels
     public class CreateEditFtpConfigurationViewModel : INotifyPropertyChanged
     {
         private Lazy<FtpService> _ftpService = new Lazy<FtpService>();
+        private CreateFtpConfigurationCommand _createFtpConfigurationCommand = new CreateFtpConfigurationCommand();
 
         private string _server;
         private string _userName;
@@ -55,6 +53,8 @@ namespace Upload.ViewModels
             }
         }
 
+        public MainWindowViewModel MainViewModel { get; set; }
+
         public Func<string> GetText;
 
         public async Task TestConnection()
@@ -69,6 +69,18 @@ namespace Upload.ViewModels
             }
         }
 
+        public async Task Save()
+        {
+            await _createFtpConfigurationCommand.ExecuteCommand(new FtpInformation()
+            {
+                Server = Server,
+                Password = _password.Encrypt(),
+                UserName = UserName
+            });
+
+            await MainViewModel.UpdateConfigurationsAsync();
+        }
+        
         // This is temporarily commented out. It was very specific towards configr configuration
         //public void TaskCopyConfiguration()
         //{

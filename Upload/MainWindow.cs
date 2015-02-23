@@ -57,6 +57,7 @@ namespace Upload
         private void Open_Clicked(object sender, RoutedEventArgs e)
         {
             CreateEditFtpConfigurationView view = new CreateEditFtpConfigurationView();
+            view.MainViewModel = this.Scope;
             view.Show();
         }
     }

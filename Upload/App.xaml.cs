@@ -1,8 +1,9 @@
-﻿using System.IO;
+﻿using System;
 using System.Linq;
 using System.Windows;
-using Upload.Configuration;
-using Upload.Configuration.ConfigR;
+using System.Windows.Threading;
+using ConfigR;
+using Upload.Configuration.Database;
 
 namespace Upload
 {
@@ -14,9 +15,21 @@ namespace Upload
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
             GlobalParameters.Path = e.Args.FirstOrDefault() ?? @"c:\temp\testfolder";
-            UploadConfig.SetConfigurationManager(new ConfigRConfigurationManager(), e.Args);
+            //UploadConfig.SetConfigurationManager(new ConfigRConfigurationManager(), e.Args);
+            
+            var bootstrapper = new Bootstrapper();
+            bootstrapper.Bootstrap();
+        }
+        
+        void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show(e.ToString(), "No cigar!!!");
+
+            // Prevent default unhandled exception processing
+            e.Handled = true;
         }
     }
+    
 
     public class GlobalParameters
     {

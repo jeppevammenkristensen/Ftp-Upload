@@ -24,12 +24,7 @@
 			</Grid.ColumnDefinitions>
 			<Button Content="Test" Margin="{DynamicResource Margin}" ToolTip="Tester forbindelse" Click="Test_Click">
 			</Button>
-			<Button Content="Kopier" Grid.Column="1" Margin="{DynamicResource Margin}" ToolTip="Kopierer konfiguration til Clipboardet">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="Click">
-						<ei:CallMethodAction MethodName="TaskCopyConfiguration" TargetObject="{Binding}"/>
-					</i:EventTrigger>
-				</i:Interaction.Triggers>
+			<Button Content="Save" Grid.Column="1" Margin="{DynamicResource Margin}" ToolTip="Kopierer konfiguration til Clipboardet" Click="Save_Click">
 			</Button>
 		</Grid>
 	</Grid>

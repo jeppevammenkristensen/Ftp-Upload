@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
 using Upload.Annotations;
+using Upload.Commands;
 using Upload.Configuration;
 using Upload.Infrastructure.Encryption;
 using Upload.Infrastructure.Ftp;
@@ -17,6 +18,10 @@ namespace Upload.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
+        // Commands
+        private LoadFtpConfigurationsCommand loadConfigurationsCommand = new LoadFtpConfigurationsCommand();
+
+
         private Lazy<FtpService>  _ftpService = new Lazy<FtpService>();
 
         private List<FtpInformation> _configurations;
@@ -151,6 +156,9 @@ namespace Upload.ViewModels
 
         public async Task CheckConfigurationAsync()
         {
+            if (_configurations.Count == 0)
+                return;
+
             Configuration = _configurations[CurrentConfigurationIndex];
             OnPropertyChanged("MoreThanOneConfiguration");
             OnPropertyChanged("CurrentConfigurationName");
@@ -232,8 +240,9 @@ namespace Upload.ViewModels
 
         public async Task UpdateConfigurationsAsync()
         {
-            await Task.Run(() => {_configurations = UploadConfig.Global.Get<List<FtpInformation>>(ConfigurationKeys.FTP);
-            });
+            _configurations =  await loadConfigurationsCommand.ExecuteAsync();
+                //UploadConfig.Global.Get<List<FtpInformation>>(ConfigurationKeys.FTP);
+            
             NamedConfigurations = new ObservableCollection<string>(_configurations.Select(x => x.Name));
             CurrentConfigurationIndex = 0;
            

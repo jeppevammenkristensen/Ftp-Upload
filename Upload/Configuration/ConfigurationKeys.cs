@@ -11,5 +11,7 @@
         /// ftp
         /// </summary>
         public const string FTP = "ftp";
+
+        public const string configurationConnection = "configurationConnection";
     }
 }

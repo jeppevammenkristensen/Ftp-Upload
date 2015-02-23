@@ -21,6 +21,7 @@ namespace Upload
     public partial class CreateEditFtpConfigurationView : Window
     {
         public CreateEditFtpConfigurationViewModel Scope { get; set; }
+        public MainWindowViewModel MainViewModel { get; set; }
 
         public CreateEditFtpConfigurationView()
         {
@@ -33,6 +34,7 @@ namespace Upload
             base.OnInitialized(e);
 
             Scope = new CreateEditFtpConfigurationViewModel();
+            Scope.MainViewModel = MainViewModel;
             Scope.GetText = () => PasswordTextBox.Password;
             DataContext = Scope;
         }
@@ -41,6 +43,14 @@ namespace Upload
         private async void Test_Click(object sender, RoutedEventArgs e)
         {
             await Scope.TestConnection();
+        }
+
+
+        private async void Save_Click(object sender, RoutedEventArgs e)
+        {
+            await Scope.Save();
+            this.Close();
+
         }
     }
 }
