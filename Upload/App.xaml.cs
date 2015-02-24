@@ -23,7 +23,7 @@ namespace Upload
         
         void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            MessageBox.Show(e.ToString(), "No cigar!!!");
+            MessageBox.Show(e.Exception.ToString(), "No cigar!!!");
 
             // Prevent default unhandled exception processing
             e.Handled = true;
