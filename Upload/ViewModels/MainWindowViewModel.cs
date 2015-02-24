@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -33,8 +34,26 @@ namespace Upload.ViewModels
         private int _currentConfigurationIndex;
         private double _overallProgress;
         private int _cps;
+        private Visibility _menuVisibility = Visibility.Collapsed;
+        private ObservableCollection<string> _namedConfigurations;
+
 
         public FtpInformation Configuration { get; set; }
+
+        public Visibility MenuVisibility
+        {
+            get { return _menuVisibility; }
+        }
+
+        public void ToogleMenu()
+        {
+            if (_menuVisibility == Visibility.Collapsed)
+                _menuVisibility = Visibility.Visible;
+            else
+                _menuVisibility = Visibility.Collapsed;
+
+            OnPropertyChanged("MenuVisibility");
+        }
 
         public MainWindowViewModel()
         {
@@ -58,7 +77,16 @@ namespace Upload.ViewModels
             get { return Configuration != null ? Configuration.Name : null; }
         }
 
-        public ObservableCollection<string> NamedConfigurations { get; set; }
+        public ObservableCollection<string> NamedConfigurations
+        {
+            get { return _namedConfigurations; }
+            set
+            {
+                if (Equals(value, _namedConfigurations)) return;
+                _namedConfigurations = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool ShowInvalid
         {
@@ -270,7 +298,5 @@ namespace Upload.ViewModels
             var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        
     }
 }

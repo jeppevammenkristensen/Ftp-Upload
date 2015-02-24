@@ -3,20 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" mc:Ignorable="d" x:Class="Upload.CreateEditFtpConfigurationView"
         Title="Test Ftp" Height="500" Width="300" d:DataContext="{d:DesignData /SampleData/CreateEditFtpConfigurationViewModelSampleData.xaml}">
-	<Grid>
+    <Window.Resources>
+        <Style x:Key="ErrorStyle" TargetType="FrameworkElement">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self},Path=(Validation.Errors).CurrentItem.ErrorContent}"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 		<StackPanel Margin="5" Orientation="Vertical" Grid.RowSpan="2">
 			<TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Text="Server" Margin="{DynamicResource Margin}"/>
-			<TextBox TextWrapping="Wrap" Text="{Binding Server}" ToolTip="{DynamicResource Margin}" Margin="{DynamicResource Margin}"/>
-			<TextBlock x:Name="___TextBlock__Username" TextWrapping="Wrap" VerticalAlignment="Top" Text="UserName" Margin="{DynamicResource Margin}"/>
-			<TextBox TextWrapping="Wrap" Text="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="{DynamicResource Margin}"/>
+			<TextBox TextWrapping="Wrap" Text="{Binding Server, ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=LostFocus}"  Margin="{DynamicResource Margin}" Style="{StaticResource ErrorStyle}"/>
+			<TextBlock  TextWrapping="Wrap" VerticalAlignment="Top" Text="UserName" Margin="{DynamicResource Margin}"/>
+            <TextBox TextWrapping="Wrap" Text="{Binding UserName, Mode=TwoWay,ValidatesOnDataErrors=True, ValidatesOnExceptions=True, UpdateSourceTrigger=LostFocus}" Margin="{DynamicResource Margin}"/>
 			<TextBlock TextWrapping="Wrap" VerticalAlignment="Top" Margin="{DynamicResource Margin}" Text="Password"/>
-			<PasswordBox x:Name="PasswordTextBox" Margin="{DynamicResource Margin}"/>
+			<PasswordBox  x:Name="PasswordTextBox" Margin="{DynamicResource Margin}"/>
             <TextBlock  TextWrapping="Wrap" VerticalAlignment="Top" Text="Navn" Margin="{DynamicResource Margin}" />
-            <TextBox TextWrapping="Wrap" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="{DynamicResource Margin}"/>
+            <TextBox TextWrapping="Wrap" Text="{Binding Name, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}" Margin="{DynamicResource Margin}"/>
 
             <TextBlock  TextWrapping="Wrap" VerticalAlignment="Top" Text="Sti" Margin="{DynamicResource Margin}" />
             <TextBox TextWrapping="Wrap" Text="{Binding Path, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="{DynamicResource Margin}"/>

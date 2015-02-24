@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Upload.Annotations;
@@ -10,7 +13,7 @@ using Upload.Infrastructure.Ftp;
 
 namespace Upload.ViewModels
 {
-    public class CreateEditFtpConfigurationViewModel : INotifyPropertyChanged
+    public class CreateEditFtpConfigurationViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         private Lazy<FtpService> _ftpService = new Lazy<FtpService>();
         private CreateFtpConfigurationCommand _createFtpConfigurationCommand = new CreateFtpConfigurationCommand();
@@ -45,6 +48,7 @@ namespace Upload.ViewModels
             }
         }
 
+        [Required]
         public string Server
         {
             get { return _server; }
@@ -56,6 +60,7 @@ namespace Upload.ViewModels
             }
         }
 
+        [Required]
         public string UserName
         {
             get { return _userName; }
@@ -64,6 +69,7 @@ namespace Upload.ViewModels
                 if (value == _userName) return;
                 _userName = value;
                 OnPropertyChanged();
+             
             }
         }
 
@@ -78,16 +84,28 @@ namespace Upload.ViewModels
             }
         }
 
+        [Required]
         public string Name
         {
             get { return _name; }
-            set { _name = value; }
+            set
+            {
+                if (value == _name) return;
+                _name = value;
+                OnPropertyChanged();
+            }
         }
 
         public string Path
         {
             get { return _path; }
-            set { _path = value; }
+            set
+            {
+                if (value == _path) return;
+                _path = value;
+                OnPropertyChanged();
+                
+            }
         }
 
 
@@ -104,15 +122,29 @@ namespace Upload.ViewModels
             _password = GetText();
             var result = await _ftpService.Value.CheckConnectionAsync(UserName, _password, Server);
             if (result == FtpService.FtpConnectionResult.Valid)
+            {
                 TestResult = "Valid forbindelse";
+                Connection.Clear();
+            }
             else
             {
                 TestResult = "Kunne ikke forbinde";
+                Connection.Add("Server", "Kunne ikke forbinde");
+                Connection.Add("UserName", "Kunne ikke forbinde");
             }
+
+            OnPropertyChanged("Server");
+            OnPropertyChanged("UserName");
         }
 
-        public async Task Save()
+        public async Task<bool> Save()
         {
+            await TestConnection();
+
+            var isValid = await ValidateAll();
+            if (!isValid)
+                return false;
+
             if (!Id.HasValue)
             {
                 await _createFtpConfigurationCommand.ExecuteCommand(new FtpInformation()
@@ -138,8 +170,25 @@ namespace Upload.ViewModels
             }
 
             await MainViewModel.UpdateConfigurationsAsync();
+            return true;
         }
-        
+
+        private async Task<bool> ValidateAll()
+        {
+            var properties = new[]
+            {
+                "Server", "Name", "Path",
+                "UserName"
+            };
+
+            foreach (var property in properties)
+            {
+                OnPropertyChanged(property);
+            }
+
+            return properties.All(x => string.IsNullOrWhiteSpace(GetErrorMessageForProperty(x)));
+        }
+
         // This is temporarily commented out. It was very specific towards configr configuration
         //public void TaskCopyConfiguration()
         //{
@@ -174,7 +223,44 @@ namespace Upload.ViewModels
         }
 
         #endregion
-    }
 
-    
+
+        protected string ValidateProperty(object value = null,string propertyName = null)
+        {
+            if (propertyName == null)
+                return string.Empty;
+
+            ValidationContext context = new ValidationContext(this, null, null);
+            context.MemberName = propertyName;
+
+            ICollection<ValidationResult> results = new List<ValidationResult>();
+            var validate = Validator.TryValidateProperty(value, context,results);
+            if (!validate)
+                return string.Join("-", results.Select(x => x.ErrorMessage));
+            return string.Empty;
+
+        }
+
+         string IDataErrorInfo.this[string propertyName]
+        {
+            get {
+                return GetErrorMessageForProperty(propertyName);
+            }
+        }
+
+         private string GetErrorMessageForProperty(string propertyName)
+         {
+             if (Connection.ContainsKey(propertyName))
+                 return Connection[propertyName];
+
+             return ValidateProperty(this.GetType().GetProperty(propertyName).GetValue(this, null), propertyName);
+         }
+
+        public string Error
+        {
+            get { return string.Empty; }
+        }
+
+        private static readonly IDictionary<string,string> Connection = new Dictionary<string, string>();
+    }    
 }

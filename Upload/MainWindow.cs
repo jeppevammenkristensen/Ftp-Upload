@@ -67,5 +67,11 @@ namespace Upload
             await view.InjectValues(Scope,Scope.Configuration.Id);
             view.Show();
         }
+
+        private void KeyDown_Pressed(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftAlt || e.Key == Key.RightAlt || e.Key == Key.System)
+                Scope.ToogleMenu();
+        }
     }
 }

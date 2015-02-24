@@ -40,8 +40,9 @@ namespace Upload
 
         private async void Save_Click(object sender, RoutedEventArgs e)
         {
-            await Scope.Save();
-            this.Close();
+            var success = await Scope.Save();
+            if (success)
+                this.Close();
 
         }
 
