@@ -29,8 +29,8 @@
         		<ColumnDefinition Width="19*"/>
         	</Grid.ColumnDefinitions>
         	<Grid.RowDefinitions>
-        		<RowDefinition Height="165*"/>
-        		<RowDefinition Height="32*"/>
+        		<RowDefinition/>
+        		<RowDefinition Height="Auto"/>
         	</Grid.RowDefinitions>
 		
         	<ListBox Grid.Column="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding FileStatusInformations}" Visibility="{Binding IsValid, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.ColumnSpan="2" >
@@ -48,7 +48,7 @@
                     
         		</ListBox.ItemTemplate>
         	</ListBox>
-        	<ProgressBar Margin="10" Grid.Row="1" Value="{Binding OverallProgress}"/>
+        	<ProgressBar Margin="10" Grid.Row="1" Value="{Binding OverallProgress}" Height="15"/>
         	<TextBlock Grid.Column="1" Margin="5" Grid.Row="1" TextWrapping="Wrap" Text="{Binding CPS}"/>
         </Grid>
 		<TextBlock HorizontalAlignment="Stretch" Margin="10" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Status}" Grid.ColumnSpan="2"><Run Text="Convallis dignissim elementum vivamus eleifend"/></TextBlock>
