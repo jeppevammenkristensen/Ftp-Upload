@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Upload.ViewModels;
 
 namespace Upload
@@ -22,6 +12,7 @@ namespace Upload
     {
         public CreateEditFtpConfigurationViewModel Scope { get; set; }
         public MainWindowViewModel MainViewModel { get; set; }
+        public int? Id { get; set; }
 
         public CreateEditFtpConfigurationView()
         {
@@ -36,6 +27,7 @@ namespace Upload
             Scope = new CreateEditFtpConfigurationViewModel();
             Scope.MainViewModel = MainViewModel;
             Scope.GetText = () => PasswordTextBox.Password;
+            Scope.SetText = (password) => PasswordTextBox.Password = password;
             DataContext = Scope;
         }
 
@@ -51,6 +43,13 @@ namespace Upload
             await Scope.Save();
             this.Close();
 
+        }
+
+        public async Task InjectValues(MainWindowViewModel scope, int? id = null)
+        {
+            Scope.MainViewModel = scope;
+            Scope.Id = id;
+            await Scope.LoadAsync();
         }
     }
 }

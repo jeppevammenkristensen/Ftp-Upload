@@ -113,7 +113,7 @@ namespace Upload.ViewModels
 
         public bool MoreThanOneConfiguration
         {
-            get { return _configurations.Count > 1; }
+            get { return _configurations.Count > 0; }
         }
 
 

@@ -14,11 +14,36 @@ namespace Upload.ViewModels
     {
         private Lazy<FtpService> _ftpService = new Lazy<FtpService>();
         private CreateFtpConfigurationCommand _createFtpConfigurationCommand = new CreateFtpConfigurationCommand();
+        private UpdateFtpConfigurationCommand _updateFtpConfigurationCommand = new UpdateFtpConfigurationCommand();
+        private GetFtpConfigurationCommand _getFtpConfigurationCommand = new GetFtpConfigurationCommand();
 
         private string _server;
         private string _userName;
         private string _password;
         private string _testResult;
+
+        public int? Id
+        {
+            get { return _id; }
+            set
+            {
+                _id = value;
+            }
+        }
+
+        public async Task LoadAsync()
+        {
+            if (Id.HasValue)
+            {
+                var result = await _getFtpConfigurationCommand.ExecuteAsync(Id.Value);
+                Server = result.Server;
+                Name = result.Name;
+                _password = result.Password.Decrypt();
+                SetText(_password);
+                UserName = result.UserName;
+                Path = result.Path;
+            }
+        }
 
         public string Server
         {
@@ -53,9 +78,26 @@ namespace Upload.ViewModels
             }
         }
 
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
+        public string Path
+        {
+            get { return _path; }
+            set { _path = value; }
+        }
+
+
         public MainWindowViewModel MainViewModel { get; set; }
+        public Action<string> SetText { get; set; }
 
         public Func<string> GetText;
+        private string _name;
+        private string _path;
+        private int? _id;
 
         public async Task TestConnection()
         {
@@ -71,12 +113,29 @@ namespace Upload.ViewModels
 
         public async Task Save()
         {
-            await _createFtpConfigurationCommand.ExecuteCommand(new FtpInformation()
+            if (!Id.HasValue)
             {
-                Server = Server,
-                Password = _password.Encrypt(),
-                UserName = UserName
-            });
+                await _createFtpConfigurationCommand.ExecuteCommand(new FtpInformation()
+                {
+                    Server = Server,
+                    Password = _password.Encrypt(),
+                    UserName = UserName,
+                    Name = Name,
+                    Path = Path,
+                });
+            }
+            else
+            {
+                await _updateFtpConfigurationCommand.ExecuteCommand(new FtpInformation()
+                {
+                    Id = Id.Value,
+                    Server = Server,
+                    Password = _password.Encrypt(),
+                    UserName = UserName,
+                    Name = Name,
+                    Path = Path,
+                });
+            }
 
             await MainViewModel.UpdateConfigurationsAsync();
         }
@@ -116,4 +175,6 @@ namespace Upload.ViewModels
 
         #endregion
     }
+
+    
 }

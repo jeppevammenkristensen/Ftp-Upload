@@ -26,7 +26,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>0.7.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -124,8 +124,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\GetFtpConfigurationCommand.cs" />
     <Compile Include="Commands\LoadFtpConfigurationsCommand.cs" />
     <Compile Include="Commands\CreateFtpConfigurationCommand.cs" />
+    <Compile Include="Commands\UpdateFtpConfigurationCommand.cs" />
     <Compile Include="Configuration\ConfigR\ConfigRConfigurationManager.cs" />
     <Compile Include="Configuration\ConfigurationKeys.cs" />
     <Compile Include="Configuration\Database\DatabaseBootstrapper.cs" />

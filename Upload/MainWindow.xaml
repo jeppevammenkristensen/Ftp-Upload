@@ -54,11 +54,16 @@
 		<TextBlock HorizontalAlignment="Stretch" Margin="10" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Text="{Binding Status}" Grid.ColumnSpan="2"><Run Text="Convallis dignissim elementum vivamus eleifend"/></TextBlock>
 		<Grid Grid.Column="1" Margin="10">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="320*"/>
-				<ColumnDefinition Width="43*"/>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
 			<ComboBox VerticalAlignment="Top" ItemsSource="{Binding NamedConfigurations}" Visibility="{Binding MoreThanOneConfiguration, Converter={StaticResource BooleanToVisibilityConverter}}" SelectedIndex="{Binding CurrentConfigurationIndex}" Margin="{DynamicResource Margin}"/>
-			<Button Content="Open" Grid.Column="1" Margin="{DynamicResource Margin}" Click="Open_Clicked"/>
+            <StackPanel Grid.Column="1" Margin="{DynamicResource Margin}" Orientation="Horizontal">
+                <Button Content="Open"   Click="Open_Clicked"/>
+                <Button Content="Edit" Click="Edit_Clicked"></Button>
+            </StackPanel>
+            
+            
 		</Grid>
 		<Button Content="Upload" Grid.Column="2" Margin="10" Visibility="{Binding MoreThanOneConfiguration, Converter={StaticResource BooleanToVisibilityConverter}}" IsEnabled="{Binding IsValid, Converter={StaticResource BooleanToVisibilityConverter}}" Click="Upload"/>
 
