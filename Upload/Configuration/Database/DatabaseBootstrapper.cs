@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -8,6 +9,7 @@ using System.Reflection;
 using ConfigR;
 using Dapper;
 using Effortless.Net.Encryption;
+using Microsoft.Win32;
 using Upload.Infrastructure.Database;
 
 namespace Upload.Configuration.Database
@@ -21,6 +23,39 @@ namespace Upload.Configuration.Database
 
             var encryptionBootstrapper = new EncryptionBootstrapper();
             encryptionBootstrapper.Setup();
+
+            var contextMenuItemBootstrapper = new ContextItemBootstrapper();
+            contextMenuItemBootstrapper.Setup();
+        }
+    }
+
+    public class ContextItemBootstrapper
+    {
+        public void Setup()
+        {
+            try
+            {
+                var folderSubkey = Registry.ClassesRoot.OpenSubKey("Directory").OpenSubKey("shell",true);
+
+                RegistryKey customFtpSubKey = folderSubkey.OpenSubKey("CustomFtp",true);
+                if (customFtpSubKey == null)
+                {
+                    customFtpSubKey = folderSubkey.CreateSubKey("CustomFtp");
+                    customFtpSubKey.SetValue("", "Upload folder til ftp");
+
+
+                    var command = customFtpSubKey.CreateSubKey("command");
+                    command.SetValue("",
+                        string.Format("{0} \"%L\"", Assembly.GetExecutingAssembly().Location));
+                    command.Close();
+
+                    customFtpSubKey.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                // We catch the exception because security can cause this not to be available
+            }
         }
     }
 
