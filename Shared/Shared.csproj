@@ -84,6 +84,7 @@
     <Compile Include="Configuration\ConfigR\ConfigRConfigurationManager.cs" />
     <Compile Include="Configuration\ConfigurationKeys.cs" />
     <Compile Include="Configuration\Database\DatabaseBootstrapper.cs" />
+    <Compile Include="Configuration\DownloadApplicationLocation.cs" />
     <Compile Include="Configuration\Download\DownloadArguments.cs" />
     <Compile Include="Configuration\EncryptionConfiguration.cs" />
     <Compile Include="Configuration\FtpInformation.cs" />
