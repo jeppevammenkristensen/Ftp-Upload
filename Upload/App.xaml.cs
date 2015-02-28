@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
 using ConfigR;
-using Upload.Configuration.Database;
+using Shared.Configuration.Database;
 
 namespace Upload
 {

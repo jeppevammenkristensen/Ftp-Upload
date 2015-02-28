@@ -5,11 +5,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Shared.Commands;
+using Shared.Configuration;
+using Shared.Infrastructure.Encryption;
+using Shared.Infrastructure.Ftp;
 using Upload.Annotations;
-using Upload.Commands;
-using Upload.Configuration;
-using Upload.Infrastructure.Encryption;
-using Upload.Infrastructure.Ftp;
 
 namespace Upload.ViewModels
 {

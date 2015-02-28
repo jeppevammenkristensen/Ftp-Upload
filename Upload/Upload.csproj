@@ -125,7 +125,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WinSCPnet">
-      <HintPath>..\packages\WinSCP.5.5.6\lib\WinSCPnet.dll</HintPath>
+      <HintPath>..\packages\WinSCP.5.7\lib\WinSCPnet.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -133,25 +133,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\GetFtpConfigurationCommand.cs" />
-    <Compile Include="Commands\LoadFtpConfigurationsCommand.cs" />
-    <Compile Include="Commands\CreateFtpConfigurationCommand.cs" />
-    <Compile Include="Commands\UpdateFtpConfigurationCommand.cs" />
-    <Compile Include="Configuration\ConfigR\ConfigRConfigurationManager.cs" />
-    <Compile Include="Configuration\ConfigurationKeys.cs" />
-    <Compile Include="Configuration\Database\DatabaseBootstrapper.cs" />
-    <Compile Include="Configuration\EncryptionConfiguration.cs" />
-    <Compile Include="Configuration\FtpInformation.cs" />
-    <Compile Include="Configuration\UploadConfig.cs" />
-    <Compile Include="Configuration\Utils\PathUtil.cs" />
     <Compile Include="CreateEditFtpConfigurationView.xaml.cs">
       <DependentUpon>CreateEditFtpConfigurationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\Database\ConnectionManager.cs" />
-    <Compile Include="Infrastructure\Encryption\Crypt.cs" />
-    <Compile Include="Infrastructure\Encryption\EncryptionExtensions.cs" />
-    <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
-    <Compile Include="Infrastructure\Ftp\FtpService.cs" />
     <Compile Include="ViewModels\CreateEditFtpConfigurationViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Messages\ConfigurationChanged.cs" />
@@ -212,7 +196,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Infrastructure\Writer\FtpConfiguration.txt" />
     <EmbeddedResource Include="Data\1.sql" />
     <Content Include="Data\Configuration.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -222,13 +205,6 @@
       <DependentUpon>Configuration.mdf</DependentUpon>
     </Content>
     <EmbeddedResource Include="Data\DatabaseProject.publish.sql" />
-    <Content Include="WinSCP.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <DesignData Include="SampleData\CreateEditFtpConfigurationViewModelSampleData.xaml" />
-    <DesignData Include="SampleData\MainWindowViewModelSampleData.xaml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
@@ -247,7 +223,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{5caa395f-e64b-45e6-b05e-38b1fe9d26da}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

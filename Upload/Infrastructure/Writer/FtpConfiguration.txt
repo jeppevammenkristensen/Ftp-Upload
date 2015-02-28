@@ -1,7 +1,0 @@
-﻿ftpInformations.Add(new FtpInformation(){{
-	Password = "{0}",
-    Server =  "{1}",
-    UserName = "{2}",
-	Name = "",
-    Path = "" /* The path when connected to the ftp server */,
-}});

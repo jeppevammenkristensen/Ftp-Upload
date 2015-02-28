@@ -1,4 +1,4 @@
-﻿using Upload.Configuration;
+﻿using Shared.Configuration;
 using System.Collections.Generic;
 var ftpInformations = new List<FtpInformation>();
 
@@ -18,6 +18,6 @@ Add("encryption", new EncryptionConfiguration(){
 	IV = new byte []{207,59,31,207,206,217,104,99,192,34,64,174,195,31,20,242,103,149,175,105,218,220,127,143,93,250,204,22,145,27,81,156}
 });
 
-string databaseFile = Upload.Configuration.Utils.ConfigurationPathUtil.CopyEnsuredFile("Data","Configuration.mdf");
+string databaseFile = Shared.Configuration.Utils.ConfigurationPathUtil.CopyEnsuredFile("Data","Configuration.mdf");
 
 Add("configurationConnection", string.Format("Data Source=(LocalDB)\\v11.0;AttachDbFilename=\"{0}\";Integrated Security=True", databaseFile));

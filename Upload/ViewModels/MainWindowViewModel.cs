@@ -7,11 +7,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows;
+using Shared.Commands;
+using Shared.Configuration;
+using Shared.Infrastructure.Encryption;
+using Shared.Infrastructure.Ftp;
 using Upload.Annotations;
-using Upload.Commands;
-using Upload.Configuration;
-using Upload.Infrastructure.Encryption;
-using Upload.Infrastructure.Ftp;
 using WinSCP;
 
 namespace Upload.ViewModels
@@ -35,7 +35,6 @@ namespace Upload.ViewModels
         private int _cps;
         private Visibility _menuVisibility = Visibility.Collapsed;
         private ObservableCollection<string> _namedConfigurations;
-
 
         public FtpInformation Configuration { get; set; }
 
