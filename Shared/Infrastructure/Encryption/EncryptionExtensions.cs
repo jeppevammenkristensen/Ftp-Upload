@@ -2,7 +2,6 @@
 {
     public static class EncryptionExtensions
     {
-
         public static string Decrypt(this string cipherText)
         {
             var crypt = new PasswordCrypt();

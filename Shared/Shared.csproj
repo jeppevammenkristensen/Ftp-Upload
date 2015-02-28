@@ -84,8 +84,10 @@
     <Compile Include="Configuration\ConfigR\ConfigRConfigurationManager.cs" />
     <Compile Include="Configuration\ConfigurationKeys.cs" />
     <Compile Include="Configuration\Database\DatabaseBootstrapper.cs" />
+    <Compile Include="Configuration\Download\DownloadArguments.cs" />
     <Compile Include="Configuration\EncryptionConfiguration.cs" />
     <Compile Include="Configuration\FtpInformation.cs" />
+    <Compile Include="Configuration\Json\JsonBootstrapper.cs" />
     <Compile Include="Configuration\UploadConfig.cs" />
     <Compile Include="Configuration\Utils\PathUtil.cs" />
     <Compile Include="FtpDownload.cs" />

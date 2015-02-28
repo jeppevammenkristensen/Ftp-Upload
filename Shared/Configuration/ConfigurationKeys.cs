@@ -13,5 +13,6 @@
         public const string FTP = "ftp";
 
         public const string configurationConnection = "configurationConnection";
+        public const string DownloadArguments = "downloadArguments";
     }
 }
