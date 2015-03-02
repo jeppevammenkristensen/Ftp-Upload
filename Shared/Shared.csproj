@@ -77,6 +77,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CreateDownloadApplication.cs" />
     <Compile Include="Commands\CreateFtpConfigurationCommand.cs" />
     <Compile Include="Commands\GetFtpConfigurationCommand.cs" />
     <Compile Include="Commands\LoadFtpConfigurationsCommand.cs" />
@@ -88,7 +89,7 @@
     <Compile Include="Configuration\Download\DownloadArguments.cs" />
     <Compile Include="Configuration\EncryptionConfiguration.cs" />
     <Compile Include="Configuration\FtpInformation.cs" />
-    <Compile Include="Configuration\Json\JsonBootstrapper.cs" />
+    <Compile Include="Configuration\Json\JsonConfigurator.cs" />
     <Compile Include="Configuration\UploadConfig.cs" />
     <Compile Include="Configuration\Utils\PathUtil.cs" />
     <Compile Include="FtpDownload.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Infrastructure\Encryption\Crypt.cs" />
     <Compile Include="Infrastructure\Encryption\EncryptionExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
+    <Compile Include="Infrastructure\Files\FileCopier.cs" />
     <Compile Include="Infrastructure\Ftp\FtpService.cs" />
     <Compile Include="Infrastructure\PaswordCrypt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

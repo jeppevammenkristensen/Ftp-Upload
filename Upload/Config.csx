@@ -19,5 +19,9 @@ Add("encryption", new EncryptionConfiguration(){
 });
 
 string databaseFile = Shared.Configuration.Utils.ConfigurationPathUtil.CopyEnsuredFile("Data","Configuration.mdf");
+Add("download",new DownloadApplication()
+{
+	Location = "..\\..\\..\\Download\\bin\\debug"
+});
 
 Add("configurationConnection", string.Format("Data Source=(LocalDB)\\v11.0;AttachDbFilename=\"{0}\";Integrated Security=True", databaseFile));

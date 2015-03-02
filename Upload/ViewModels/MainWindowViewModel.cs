@@ -147,6 +147,8 @@ namespace Upload.ViewModels
         {
             Status = "Uploader";
             FileStatusInformations.Clear();
+            var ftpPath = string.Format("{0}_{1:yyyyMMddHHmmss}", Configuration.Path, DateTime.Now);
+            var sessionOptions = GetSessionOptions();
 
             await Task.Run(() =>
             {
@@ -155,16 +157,15 @@ namespace Upload.ViewModels
                     session.FileTransferProgress += FileTransferProgress;
 
                     // Connect
-                    session.Open(GetSessionOptions());
+                    session.Open(sessionOptions);
 
                     // Upload files
                     TransferOptions transferOptions = new TransferOptions();
                     transferOptions.TransferMode = TransferMode.Binary;
 
                     TransferOperationResult transferResult = null;
-
-                    transferResult = session.PutFiles(Location,
-                        string.Format("{0}_{1:yyyyMMddHHmmss}", Configuration.Path, DateTime.Now), false,
+                    transferResult = session.PutFiles(Location,ftpPath
+                       , false,
                         transferOptions);
 
                     // Throw on any error
@@ -176,7 +177,19 @@ namespace Upload.ViewModels
                 }
             });
 
-            Status = "Færdig med upload";
+            Status = "Færdig med upload. Kopier udtrækker";
+            var command = new CreateDownloadApplication()
+            {
+                FtpPath = ftpPath,
+                EncryptedPassword = sessionOptions.Password.Encrypt(),
+                FolderName = string.Format("{0}{1:yyyyMMddHHmmss}", Configuration.Name, DateTime.Now),
+                HostName = Configuration.Server,
+                UserName = Configuration.UserName
+            };
+
+            await command.CreateDownloader();
+
+
         }
 
 
